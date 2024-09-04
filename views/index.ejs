@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <h1>Register for the Event</h1>
+  <p>Seats remaining: <%= seatsRemaining %></p>
+  <p>Time left: <span id="timer"><%= Math.floor(timeLeft / 60) %> minutes and <%= timeLeft % 60 %> seconds</span></p>
+  <form action="/register" method="POST">
+    <input type="text" name="name" placeholder="Name" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <button type="submit">Register</button>
+  </form>
+
+  <script>
+    // Simple countdown timer
+    let timeLeft = `<%= timeLeft %>`;
+    const timerElement = document.getElementById('timer');
+
+    const countdown = setInterval(() => {
+      if (timeLeft <= 0) {
+        clearInterval(countdown);
+        timerElement.textContent = "Registration closed.";
+        document.querySelector('form').style.display = 'none';
+      } else {
+        timeLeft--;
+        timerElement.textContent = `${Math.floor(timeLeft / 60)} minutes and ${timeLeft % 60} seconds`;
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
